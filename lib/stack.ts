@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import { Construct } from 'constructs';
+import { Tags } from 'aws-cdk-lib';
 
 export interface ServerlessS3SignerStackProps extends cdk.StackProps {  
   /**
@@ -50,6 +51,9 @@ export class ServerlessS3SignerStack extends cdk.Stack {
       timeout: cdk.Duration.seconds(180),
     });
 
+    // Add tag to Lambda function
+    Tags.of(signUrlFunction).add('project', 'chervon');
+
     // Note: S3 IAM policies removed - Lambda will use AKSK credentials from environment variables
     // The Owner_Access_Key and Owner_Secret_KEY provide direct AWS authentication
 
@@ -63,6 +67,9 @@ export class ServerlessS3SignerStack extends cdk.Stack {
         allowMethods: apigateway.Cors.ALL_METHODS,
       },
     });
+
+    // Add tag to API Gateway
+    Tags.of(api).add('project', 'chervon');
 
     // Add Lambda integration
     const lambdaIntegration = new apigateway.LambdaIntegration(signUrlFunction);
