@@ -1,0 +1,10 @@
+{
+  "name": "s3-signer-lambda",
+  "version": "1.0.0",
+  "description": "Lambda function to generate S3 signed URLs",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.0.0",
+    "@aws-sdk/s3-request-presigner": "^3.0.0"
+  }
+}
